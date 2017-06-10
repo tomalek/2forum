@@ -9,20 +9,24 @@
 <div class="container-fluid body-content"><br/>
 <form th:action="@{/private_messages/sent}" method="get">
 
-    <button type="submit">Moje wysłane wiadomości</button>
+    <button type="submit" class="btn btn-info">Moje wysłane wiadomości</button>
 </form>
+    <form th:action="@{/user/my_profile}" method="get">
+
+        <button type="submit" class="btn btn-info">Powrót do profilu</button>
+    </form>
 
 
-<br/>Twoje otrzymane wiadomości:<br/>
+<br/><font size="4" color="#0375B4" style="width: 100px">Twoje otrzymane wiadomości:</font><br/>
 
 <div th:each="message : ${receivedMessages}">
-    <table style="width: 1000px; border-bottom: 0px">
-        <tr>
+    <table class="table" style="width: 1000px; border-bottom: 0px">
+        <tr class="headermessage">
             <td style="font-weight:bold">Nadawca:</td>
             <td style="font-weight:bold">Data:</td>
             <td style="font-weight:bold">Przeczytaj całą wiadomość:</td>
         </tr>
-        <tr>
+        <tr class="inner">
 
             <td style="width: 100px">
                 <a th:href="@{'/user/user_profile/'+${message.sender_name}}" th:text="${message.sender_name}"/>
@@ -36,31 +40,36 @@
                 <center>
                     <form th:action="${message.private_message_id}" method="get">
 
-                        <input type="submit" value="Wejdź"/>
+                        <button type="submit" class="btn btn-seeprivate">Zobacz</button>
 
                     </form>
                 </center>
             </td>
             <br/>
         </tr>
-    </table>
-    <table style="width: 1000px; border-top: 0px; border-bottom: 0px">
-        <tr>
-            <th style="width: 50px; text-align: left">Temat:</th>
+        <tr class="inner">
+            <th style="width: 50px;color: #0375B4; text-align: left">Temat:</th>
+            <th></th><th></th>
         </tr>
-        <tr>
+        <tr class="inner">
             <td class="a" th:text="${#strings.abbreviate(message.topic,100)}"></td>
+            <td></td>
+            <td></td>
         </tr>
-    </table>
-    <table style="width: 1000px; border-top: 0px">
-        <tr>
-        <tr>
-            <th style="width: 50px; text-align: left">Treść wiadomości:</th>
+        <tr class="inner">
+
+            <th style="width: 50px; color: #0375B4;text-align: left">Treść wiadomości:</th>
+            <th></th>
+            <th></th>
         </tr>
+        <tr class="inner">
         <td class="a" th:text="${#strings.abbreviate(message.content,500)}"></td>
+            <td></td>
+            <td></td>
 
         </tr>
     </table>
+
 
 </div>
 
