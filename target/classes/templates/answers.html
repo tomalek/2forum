@@ -4,7 +4,23 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Odpowiedzi</title>
+    <script type="text/javascript">
+        window.onscroll = function() {scrollFunction()};
 
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Chrome, Safari and Opera
+            document.documentElement.scrollTop = 0; // For IE and Firefox
+        }
+    </script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"/>
@@ -12,8 +28,8 @@
 
 
     <div th:each="postcount : ${post}">
-        <table style="width: 1000px; border-bottom: 0px">
-            <tr style="font-weight:bold">
+        <table class="table" style="width: 1000px; border-bottom: 0px">
+            <tr class="headerr" style="font-weight:bold">
                 <td>Autor:</td>
 
                 <td>Kategoria:</td>
@@ -21,7 +37,7 @@
                 <td style="width: 150px">Ilość plusów: <span style="font-weight:normal"
                                                              th:text="${postcount.ilosc_plusow}"></span></td>
             </tr>
-            <tr>
+            <tr  class="inner">
                 <td style="width: 100px">
                     <a th:href="@{'/user/user_profile/'+${postcount.user_name}}" th:text="${postcount.user_name}"/>
 
@@ -30,9 +46,9 @@
 
                 <td style="width: 100px" th:text="${postcount.category}"></td>
                 <td style="width: 150px" th:text="${postcount.date}"></td>
-                <td style="width: 100px" max-height="100px">
-                    <center>
-                        <span sec:authorize="isAnonymous()">Zaloguj się, by głosować.</span>
+                <td >
+
+                        <span sec:authorize="isAnonymous()" style="color:#E37222">Zaloguj się, by głosować.</span>
                         <form sec:authorize="isAuthenticated()" action="/forum/like" method="POST">
                     <span th:switch="${if_liked}">
 
@@ -41,76 +57,78 @@
 
                         <span th:switch="${if_liked}">
 
-                            <input th:case="false" type="submit" value="Polub to!"/>
-                            <input th:case="true" type="submit" value="Usuń polubienie!"/>
+                            <button th:case="false" type="submit" class="btn btn-default">Polub to</button>
+                             <button th:case="true" type="submit" class="btn btn-success">Usuń polubienie</button>
 
                     </span>
                     </span>
                         </form>
-                    </center>
+
                 </td>
 
             </tr>
-        </table>
-        <table style="width: 1000px; border-top: 0px; border-bottom: 0px">
-            <tr>
-                <th style="width: 50px; text-align: left">Temat:</th>
+            <tr  class="inner">
+                <th style="width: 50px;  color: #0375B4;text-align: left">Temat:</th>
+                <th></th><th></th><th></th>
             </tr>
-            <tr>
+            <tr  class="inner">
                 <td class="a" th:text="${postcount.topic}"></td>
+                <td></td><td></td><td></td>
             </tr>
-        </table>
-        <table style="width: 1000px; border-top: 0px">
-            <tr>
-                <th style="width: 100px; text-align: left">Treść posta:</th>
+            <tr  class="inner">
+                <th style="width: 100px;  color: #0375B4;text-align: left" >Treść posta:</th>
+                <th></th><th></th><th></th>
             </tr>
-            <tr>
+            <tr  class="inner">
                 <td class="a" th:text="${postcount.content}"></td>
+                <td></td><td></td><td></td>
 
 
             </tr>
         </table>
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Powrót na górę strony</button>
+
         <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{'/forum/delete/post'}" method="post">
             <input type="hidden" th:value="${postcount.public_message_id}" th:name="id"/>
-            <button type="submit">Usuń</button>
+            <button type="submit" class="btn btn-danger">Usuń</button>
         </form>
         <br/>
     </div>
 
-    <br/><br/>
+    <br/>
 
 
-    <span sec:authorize="isAuthenticated()">Odpowiedz na ten post:</span>
-    <span sec:authorize="isAnonymous()">Zaloguj się aby odpowiedzieć na ten post.</span>
+
+    <span sec:authorize="isAnonymous()" style="color:#E37222">Zaloguj się aby odpowiedzieć na ten post.</span>
     <br/><br/>
     <div sec:authorize="isAuthenticated()">
         <form method="POST">
-            <textarea rows="7" cols="75" name="content"/>
-            <div><input type="submit" value="Wyslij odpowiedz"/></div>
+            <textarea  class="form-control" placeholder="Wpisz odpowiedź" rows="7" cols="75" name="content"/>
+            <div><button type="submit" class="btn btn-primary">Wyślij odpowiedź</button></div>
         </form>
     </div>
 
 
     <br/><br/>
-    Odpowiedzi:
+    <font size="4" color="#0375B4" style="width: 100px">Odpowiedzi:</font>
     <div th:each="answer : ${answers}">
-        <table style="width: 1000px">
-            <tr>
+        <table style="width: 1000px" class="table">
+            <tr class="inner">
                 <th style="width: 100px; text-align: left">Autor: <span>
                             <a style="font-weight:normal" th:href="@{'/user/user_profile/'+${answer.user_name}}"
                                th:text="${answer.user_name}"/>
             </span></th>
             </tr>
-            <tr>
+            <tr class="inner">
                 <th style="text-align: left;">Data: <span style="width: 150px; font-weight:normal;"
                                                           th:text="${answer.date}"></span></th>
 
             </tr>
-            <tr>
+            <tr class="inner">
                 <th style="text-align: left">Treść odpowiedzi:</th>
 
             </tr>
-            <tr>
+            <tr class="inner">
 
                 <td class="a" th:text="${answer.content}"></td>
 
@@ -121,7 +139,7 @@
         <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{'/forum/delete/answer'}" method="post">
             <input type="hidden" th:value="${answer.public_answer_id}" th:name="answer_id"/>
             <input type="hidden" th:value="${answer.public_message_id}" th:name="public_message_id"/>
-            <button type="submit">Usuń</button>
+            <button type="submit" class="btn btn-danger">Usuń</button>
         </form>
 
     </div>

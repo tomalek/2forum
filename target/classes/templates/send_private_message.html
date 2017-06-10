@@ -11,18 +11,19 @@
 <div sec:authorize="isAuthenticated()">
     <form method="POST">
 
-        Temat:<br/><textarea rows="2" cols="40" name="topic"/><br/><br/>
+        <textarea  class="form-control" placeholder="Wpisz temat" rows="2" cols="40" name="topic"/><br/>
 
-        Treść wiadomości:<br/><textarea rows="15" cols="75" name="content"/><br/><br/>
-
-
-        Klucz do zaszyfrowania (liczba):<br/>
-        <input type="text" th:name="key"/><br/><br/>
+        <textarea class="form-control" placeholder="Wpisz treść" rows="15" cols="75" name="content"/><br/>
 
 
-        <div><input type="submit" value="Wyślij wiadomość"/></div>
+
+        <input type="text" class="form-control smallwidth" placeholder="Klucz do zaszyfrowania (liczba)" th:name="key"/><br/>
+
+
+        <div><button type="submit" class="btn btn-seeprivate">Wyślij wiadomość</button></div>
 
     </form>
+
 
 </div>
 </div>

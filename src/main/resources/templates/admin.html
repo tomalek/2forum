@@ -8,16 +8,16 @@
 <div th:replace="fragments/header :: header"/>
 <div class="container-fluid body-content"><br/>
 
-    <h1 style="color:blue"> Witaj! To jest strona admina!</h1>
+    <h1  th:inline="text"> Zablokuj lub odblokuj użytkownika</h1>
 
     <br/>
 
     <form th:action="@{/user/admin/disable}" method="GET">
-        <input type="submit" value="Wyłącz użytkownika"/>
+        <button type="submit" class="btn btn-dangerr">Zablokuj użytkownika</button>
 </form>
 <br/>
 <form th:action="@{/user/admin/enable}" method="GET">
-    <input type="submit" value="Włącz użytkownika"/>
+    <button type="submit" class="btn btn-success">Odblokuj użytkownika</button>
 </form>
 </div>
 </body>

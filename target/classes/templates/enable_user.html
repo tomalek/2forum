@@ -12,8 +12,8 @@
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <form th:action="@{/user/admin/enable}" method="POST">
-            <div><label> User Name : <input type="text" name="user_name"/> </label></div>
-            <div><input type="submit" value="Odblokuj go!"/></div>
+            <div><label> <input class="form-control averagewidth" placeholder="Nazwa użytkownika" type="text" name="user_name"/> </label></div>
+            <div><button type="submit" class="btn btn-success">Odblokuj użytkownika</button></div>
         </form>
     </div>
 </div>
